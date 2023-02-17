@@ -1,3 +1,3 @@
-## Filtering RSSI with Kalman Filter & RTS smoother
+## Filtering RSSI with Kalman Filter
 
-![plot](/kf_smooth.png)
+![plot](./img/kf_smooth.png)
