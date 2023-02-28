@@ -1,5 +1,5 @@
 ## Filtering RSSI with Kalman Filter
-<b>500 continous records of iBeacon signal.</b>
+<b>500 continuous records of iBeacon signal.</b>
 <p>Producing white noise to compare with our data.</p>
 
 ![white_noise_check](./white_noise_check.png)
