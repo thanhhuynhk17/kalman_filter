@@ -4,7 +4,7 @@ from scipy.linalg import block_diag
 from filterpy.common import Q_discrete_white_noise
 
 
-def tracker2D(R=4**2, P=10**2, Q=0.5**2, X0=np.array([[-60,0]])):
+def tracker_1st_order(R=4**2, P=10**2, Q=0.05**2, X0=np.array([[-60,0]])):
     tracker = KalmanFilter(dim_x=2, dim_z=1)
     dt = 0.2  # time step
 
@@ -28,31 +28,28 @@ def tracker2D(R=4**2, P=10**2, Q=0.5**2, X0=np.array([[-60,0]])):
     return tracker
 
 
-def tracker1D(R=0.1, P=20**2, Q=0.0001, X0=np.array([[1, 0]])):
+def tracker_2nd_order(R=0.1, P=20**2, Q=0.0001, X0=np.array([[1, 0]])):
     tracker = KalmanFilter(dim_x=1, dim_z=1)
-    dt = 1  # time step
+    # dt = 1  # time step
 
-    tracker.F = np.array([
-        [1]
-    ])
-    tracker.u = 0.
-    tracker.H = np.array([[1]])
-    tracker.R = np.eye(1) * R
-    tracker.Q = np.eye(1) * Q
-    tracker.x = X0.T
-    tracker.P = np.eye(1) * P
+    # tracker.F = np.array([
+    #     [1]
+    # ])
+    # tracker.u = 0.
+    # tracker.H = np.array([[1]])
+    # tracker.R = np.eye(1) * R
+    # tracker.Q = np.eye(1) * Q
+    # tracker.x = X0.T
+    # tracker.P = np.eye(1) * P
     return tracker
 
 
-def predict_rssi(single_channel):
+def predict_rssi(single_channel, tracker=None):
     xs = np.array(range(single_channel.size))
     ys = single_channel
 
     ys_filtered, ps_rssi = [], []
-    tracker = None
     print('\tx0\tv0\tvar0\t\tz\t\tx\tv\tvar')
-    tracker = tracker2D(R=4**2, P=10**2, Q=0.1**2, X0=np.array([[-60, 0]]))
-    print(tracker)
     for idx, rssi_raw in enumerate(single_channel):
         # predict
         tracker.predict()

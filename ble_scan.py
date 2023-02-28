@@ -3,11 +3,11 @@ from bleak import BleakScanner
 import asyncio
 import time
 import numpy as np
-from kalman import tracker2D, predict_rssi
+from kalman import tracker_1st_order, predict_rssi
 
 from constant import FNAME, BEACON, TIME_OUT
 # init filter
-tracker = tracker2D(R=4**2, P=10**2, Q=0.1**2, X0=np.array([[-60,0]]))
+tracker = tracker_1st_order(R=4**2, P=10**2, Q=0.1**2, X0=np.array([[-60,0]]))
 
 def filter_device(device, advertising_data):
     if device.name==BEACON:
