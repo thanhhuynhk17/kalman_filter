@@ -9,7 +9,8 @@
 ![gauss_check](./gaussian_check.png)
 
 <p>We can treat our sensor signal as a Gaussian, it's error is about <b>3.84(dBm)</b>.</p>
-# Filtered result
+
+## Filtered result
 <p>Data has been collected while standing.</p>
 
 ![plot](./kf_smooth.png)

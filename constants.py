@@ -1,3 +1,5 @@
+NROWS = 23
+NCOLS = 10
 BEACON = "Beacon00002"
 FNAME = f"data_{BEACON}.csv"
 TIME_OUT = 0.5

@@ -27,22 +27,33 @@ def tracker_1st_order(R=4**2, P=10**2, Q=0.05**2, X0=np.array([[-60,0]])):
     ])
     return tracker
 
+def tracker_pos_1st_order(R=2**2, P=20**2, Q=0.5**2, X0=None):
+    tracker = KalmanFilter(dim_x=4,dim_z=2)
+    
+    tracker.u = 0.
+    dt = 1 # time step (s)
+    tracker.F = np.array([
+        [1, dt, 0,  0],
+        [0,  1, 0,  0],
+        [0,  0, 1, dt],
+        [0,  0, 0,  1],
+    ])
+    tracker.H = np.array([
+        [1, 0, 0, 0],
+        [0, 0, 1, 0]
+    ])
+    tracker.R = np.eye(2) * R
 
-def tracker_2nd_order(R=0.1, P=20**2, Q=0.0001, X0=np.array([[1, 0]])):
-    tracker = KalmanFilter(dim_x=1, dim_z=1)
-    # dt = 1  # time step
+    q = Q_discrete_white_noise(dim=2, dt=dt, var=Q)
+    tracker.Q = block_diag(q, q)
 
-    # tracker.F = np.array([
-    #     [1]
-    # ])
-    # tracker.u = 0.
-    # tracker.H = np.array([[1]])
-    # tracker.R = np.eye(1) * R
-    # tracker.Q = np.eye(1) * Q
-    # tracker.x = X0.T
-    # tracker.P = np.eye(1) * P
+    if X0 == None:
+        tracker.x = np.array([[0,0,0,0]]).T
+    else:
+        tracker.x = X0.T
+    tracker.P = np.eye(4) * P
+
     return tracker
-
 
 def predict_rssi(single_channel, tracker=None):
     xs = np.array(range(single_channel.size))
